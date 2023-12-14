@@ -39,13 +39,13 @@ exports.storeProduct = (req, res) => {
 }
 
 exports.deleteProduct = (req, res) => {
-    const id = parseInt(req.params.id)
+    const {id} = req.params
 
     pool.query('DELETE FROM cosmos.products WHERE product_id = $1', [id], async (error, results) => {
         if (error) {
             throw error
         }
-        await logAction('Delete Product', req.user.id, `Deleted product with ID: ${id}`);
+        await logAction('Delete Product', {id}, `Deleted product with ID: ${id}`);
         res.status(200).send(`Product deleted with ID: ${id}`)
     })
 }
