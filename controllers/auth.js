@@ -86,8 +86,9 @@ exports.login = async (req, res) => {
       return res.status(200).json({ message: 'OTP is expired' });
     }
 
+
     // Generate and send a JSON web token (JWT) for authentication
-    const token = jwt.sign({ userId: user.user_id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user.user_id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: '1h', // Adjust the expiration time as needed
     });
 

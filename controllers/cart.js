@@ -20,15 +20,15 @@ exports.getCart = (req, res) => {
 
 exports.addCart = (req, res) => {
     //api call to store a product in the database
-    const { product_id, order_id, quantity } = req.body
+    const { product_id, user_id, quantity } = req.body
 
     try{
-        pool.query('INSERT INTO cosmos.cart (product_id, order_id, quantity) VALUES ($1, $2, $3)', [product_id, order_id, quantity], (error, results) => {        
+        pool.query('INSERT INTO cosmos.cart (product_id, user_id, quantity) VALUES ($1, $2, $3)', [product_id, user_id, quantity], (error, results) => {        
         res.status(201).send(`Cart added with ID: ${results.insertId}`)
-})
+}) 
     }catch(error){
+        res.status(500).json({ message: 'Something went wrong' });
     }
-
 }
 
 exports.deleteCartItem = (req, res) => {

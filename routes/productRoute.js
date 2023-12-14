@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const products = require('../controllers/products');
 const multer = require('multer');
-
+const {checkRole} = require('../middleware/auth');
+const verifyRole = require('../middleware/verifyToken');
 
 const imageUpload = multer({
 
@@ -18,10 +19,10 @@ const imageUpload = multer({
 
 
 // Define the login route
-router.get('/view', products.getProducts);
-router.post('/store', imageUpload.single('images'), products.storeProduct);
-router.delete('/remove/:id', products.deleteProduct);
-router.put('/edit/:id', products.updateProduct);
+router.get('/view', verifyRole, products.getProducts);
+router.post('/store', verifyRole, checkRole(['admin']), imageUpload.single('images'), products.storeProduct);
+router.delete('/remove/:id', verifyRole, checkRole(['admin']), products.deleteProduct);
+router.put('/edit/:id', verifyRole, checkRole(['admin']), products.updateProduct);
 
 
 module.exports = router;
