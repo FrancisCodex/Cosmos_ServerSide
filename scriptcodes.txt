@@ -1,0 +1,11 @@
+// const checkOtp = await pool.query('SELECT * FROM cosmos.otp_token WHERE user_id = $1', [user.user_id]);
+    // //check if the OTP of the user is over 90 days or none
+    // const otpAgeInDays = (Date.now() - new Date(checkOtp.otp_validity)) / (1000 * 60 * 60 * 24);
+    // if(user.otp && otpAgeInDays > 90){
+    //   const otp = generateOTP();
+    //   await pool.query('UPDATE cosmos.users SET otp = $1, otp_validity = $2 WHERE user_id = $3', [otp, new Date(), user.user_id]);
+    //   await sendOTPEmail(email, otp);
+
+
+    //   return res.status(401).json({ message: 'OTP expired' });
+    // }
