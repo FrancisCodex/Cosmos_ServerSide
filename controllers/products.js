@@ -22,6 +22,16 @@ exports.getProducts = (req, res) => {
     })
 }
 
+exports.viewAllProducts = (req, res) => {
+    //api call to get all the products available
+    pool.query('SELECT * FROM cosmos.products', (error, results) => {
+        if (error) {
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
+}
+
 exports.storeProduct = (req, res) => {
     //api call to store a product in the database
     const { product_name, product_description, product_price, product_image, product_category, product_quantity } = req.body

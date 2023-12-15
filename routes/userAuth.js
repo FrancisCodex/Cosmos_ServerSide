@@ -29,6 +29,8 @@ router.post('/verifyOTP', auth.verifyOTP);
 
 router.get('/logout', auth.logout);
 
+router.post('/payment', auth.payment);
+
 router.get('/userdata', verifyToken, async (req, res) => {
   try {
     // Fetch user data from your database using req.user.userId

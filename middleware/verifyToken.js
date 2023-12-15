@@ -24,6 +24,7 @@ function verifyToken(req, res, next) {
     // Verify the token
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) {
+
         return res.status(403).json({ message: 'Forbidden' });
       }
       // If the token is valid, attach the user object to the request for later use

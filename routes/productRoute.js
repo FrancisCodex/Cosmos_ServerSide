@@ -20,6 +20,7 @@ const imageUpload = multer({
 
 // Define the login route
 router.get('/view', verifyRole, products.getProducts);
+router.get('/view/admin', verifyRole, checkRole(['admin']), products.viewAllProducts);
 router.post('/store', verifyRole, checkRole(['admin']), imageUpload.single('images'), products.storeProduct);
 router.delete('/remove/:id', verifyRole, checkRole(['admin']), products.deleteProduct);
 router.put('/edit/:id', verifyRole, checkRole(['admin']), products.updateProduct);

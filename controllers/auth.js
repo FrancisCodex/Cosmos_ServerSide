@@ -400,3 +400,31 @@ exports.test = (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+exports.payment = async (req, res) => {
+  const {address, cardNumber, securityCode, month, year, name} = req.body;
+  console.log("what is the req", req.headers)
+  // Get the token from the Authorization header
+  const authHeader = req.headers.Authorization;
+  console.log(authHeader)
+  const token = authHeader && authHeader.split(' ')[1];
+  console.log(token)
+  if (token == null) return res.sendStatus(401); // if there isn't any token
+
+  try {
+    // Verify the token and get the user_id
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId;
+    console.log(userId)
+
+    const credit_card = encrypt(cardNumber);
+    const cvv = encrypt(securityCode);
+
+    pool.query('INSERT INTO cosmos.payment (user_id, address, name, credit_card, ccv, month, year) VALUES ($1, $2, $3, $4, $5, $6, $7)', [userId, address, name, credit_card, cvv, month, year]);
+
+    res.status(201).json({message: "Successfully added"});
+
+  } catch(error) {
+    res.status(500).json({message: 'Server Error'});
+  }
+};

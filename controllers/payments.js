@@ -15,3 +15,13 @@ exports.checkoutItems = (req, res) => {
         res.status(500).json({ message: 'Server Error' });
     }
 }
+
+exports.getAllOrder = async (req, res) => {
+    const {id} = req.params
+
+    try{
+    pool.query('')
+    }catch(error){
+
+    }
+}
